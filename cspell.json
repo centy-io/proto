@@ -1,4 +1,5 @@
 {
   "version": "0.2",
-  "words": []
+  "words": ["centy", "worktree", "unpushed"],
+  "ignorePaths": ["node_modules", "pnpm-lock.yaml"]
 }
