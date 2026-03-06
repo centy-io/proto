@@ -271,6 +271,9 @@ service CentyDaemon {
 
   // Search for an item by ID across all tracked projects
   rpc SearchItems(SearchItemsRequest) returns (SearchItemsResponse);
+
+  // List items of a given type across all tracked projects, sorted by created_at descending
+  rpc ListItemsAcrossProjects(ListItemsAcrossProjectsRequest) returns (ListItemsAcrossProjectsResponse);
 }
 
 // ============ Init Messages ============

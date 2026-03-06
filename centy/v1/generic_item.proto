@@ -167,3 +167,20 @@ message SearchItemsResponse {
   bool success = 4;
   string error = 5;
 }
+
+// ============ Cross-Project List Messages ============
+
+message ListItemsAcrossProjectsRequest {
+  string item_type = 1;                 // Plural type name (e.g., "issues", "docs")
+  uint32 limit = 2;                     // Limit results (0 = no limit)
+  uint32 offset = 3;                    // Offset for pagination (0 = no offset)
+  string filter = 4;                    // JSON-encoded MQL query (same as ListItemsRequest)
+}
+
+message ListItemsAcrossProjectsResponse {
+  repeated ItemWithProject items = 1;
+  int32 total_count = 2;               // Total count across all projects (before limit/offset)
+  repeated string errors = 3;          // Non-fatal errors (e.g., projects that couldn't be accessed)
+  bool success = 4;
+  string error = 5;
+}
