@@ -1116,6 +1116,8 @@ message SyncUsersResponse {
   repeated GitContributor would_create = 6;  // For dry run: users that would be created
   repeated GitContributor would_skip = 7;    // For dry run: users that would be skipped
   Manifest manifest = 8;
+  repeated string updated = 9;          // User IDs that were updated with missing data
+  repeated GitContributor would_update = 10; // For dry run: users that would be updated
 }
 
 // ============ Entity Actions Messages ============
