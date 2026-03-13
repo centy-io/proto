@@ -410,6 +410,7 @@ message Config {
   string default_editor = 11;                // Default editor ID for this project (e.g., "vscode", "terminal", "zed")
   repeated HookDefinition hooks = 12;                  // Lifecycle hooks
   WorkspaceConfig workspace = 13;            // Workspace settings
+  map<string, string> user_values = 14;      // User-defined free-form key-value pairs
 }
 
 // Workspace configuration section
