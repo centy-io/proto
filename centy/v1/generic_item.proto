@@ -7,7 +7,8 @@ message Manifest {
   int32 schema_version = 1;
   string centy_version = 2;
   string created_at = 3;
-  string updated_at = 4;
+  reserved 4;
+  reserved "updated_at";
 }
 
 // ============ Generic Item Messages ============
