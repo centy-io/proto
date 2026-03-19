@@ -140,18 +140,6 @@ service CentyDaemon {
   // Open a standalone workspace with a configurable editor (not tied to an issue)
   rpc OpenStandaloneWorkspace(OpenStandaloneWorkspaceWithEditorRequest) returns (OpenStandaloneWorkspaceResponse);
 
-  // Open a project in a temporary VS Code workspace (deprecated: use OpenInTempWorkspace)
-  rpc OpenInTempVscode(OpenInTempWorkspaceRequest) returns (OpenInTempWorkspaceResponse);
-
-  // Open a project in a temporary terminal workspace (deprecated: use OpenInTempWorkspace)
-  rpc OpenInTempTerminal(OpenInTempWorkspaceRequest) returns (OpenInTempWorkspaceResponse);
-
-  // Open a standalone workspace in VS Code (deprecated: use OpenStandaloneWorkspace)
-  rpc OpenStandaloneWorkspaceVscode(OpenStandaloneWorkspaceRequest) returns (OpenStandaloneWorkspaceResponse);
-
-  // Open a standalone workspace in terminal (deprecated: use OpenStandaloneWorkspace)
-  rpc OpenStandaloneWorkspaceTerminal(OpenStandaloneWorkspaceRequest) returns (OpenStandaloneWorkspaceResponse);
-
   // List all temp workspaces
   rpc ListTempWorkspaces(ListTempWorkspacesRequest) returns (ListTempWorkspacesResponse);
 
