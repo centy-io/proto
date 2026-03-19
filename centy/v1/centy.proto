@@ -747,7 +747,7 @@ message DaemonInfo {
   string version = 1;                    // Current daemon version (e.g., "0.1.0")
   reserved 2;                            // was: repeated string available_versions (removed)
   string binary_path = 3;                // Absolute path to the running daemon binary
-  bool vscode_available = 4;             // Whether VS Code is installed and accessible
+  reserved 4;                            // was: vscode_available (removed)
 }
 
 // ============ Daemon Control Messages ============
