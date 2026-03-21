@@ -762,19 +762,11 @@ message RestartResponse {
 
 // ============ Temp Workspace Messages ============
 
-// Editor type for opening workspaces
-enum EditorType {
-  EDITOR_TYPE_UNSPECIFIED = 0;
-  EDITOR_TYPE_VSCODE = 1;             // VS Code editor
-  EDITOR_TYPE_TERMINAL = 2;           // OS terminal
-}
-
 // Request to get supported editors (empty request)
 message GetSupportedEditorsRequest {}
 
 // Information about a supported editor
 message EditorInfo {
-  EditorType editor_type = 1;         // Editor type enum value (deprecated: use editor_id)
   string name = 2;                    // Display name (e.g., "VS Code", "Terminal")
   string description = 3;             // Brief description
   bool available = 4;                 // Whether this editor is available on the current system
