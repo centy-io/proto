@@ -30,6 +30,7 @@ message GenericItemMetadata {
   string updated_at = 5;                // ISO timestamp
   string deleted_at = 6;                // ISO timestamp when soft-deleted (empty if not deleted)
   map<string, string> custom_fields = 7; // Custom fields (values are JSON strings)
+  repeated string tags = 8;             // Free-form tags (e.g. ["bug", "frontend"])
 }
 
 message CreateItemRequest {
@@ -40,6 +41,7 @@ message CreateItemRequest {
   string status = 5;                    // Initial status (empty = use default)
   int32 priority = 6;                   // 0 = use default
   map<string, string> custom_fields = 7; // Custom fields (values are JSON strings)
+  repeated string tags = 8;             // Tags to set on create (empty = no tags)
 }
 
 message CreateItemResponse {
@@ -85,6 +87,8 @@ message UpdateItemRequest {
   string status = 6;                    // Empty = don't update
   int32 priority = 7;                   // 0 = don't update
   map<string, string> custom_fields = 8; // Custom fields to merge (values are JSON strings)
+  repeated string tags = 9;             // Non-empty = replace tags; empty = don't change
+  bool clear_tags = 10;                 // If true, clear all tags (takes precedence over tags field)
 }
 
 message UpdateItemResponse {
