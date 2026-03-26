@@ -906,19 +906,22 @@ enum LinkTargetType {
 // A link between two entities
 message Link {
   string target_id = 1;               // Target entity ID (UUID for issues, slug for docs)
-  LinkTargetType target_type = 2;     // Type of the target entity
+  LinkTargetType target_type = 2;     // Type of the target entity (legacy enum)
   string link_type = 3;               // Relationship type (e.g., "blocks", "parent-of")
   string created_at = 4;              // ISO timestamp when link was created
+  string target_item_type = 5;        // Singular item type as a string (e.g., "issue", "plan"); overrides target_type
 }
 
 // Create a link between two entities (bidirectional - also creates inverse)
 message CreateLinkRequest {
   string project_path = 1;
-  string source_id = 2;               // Source entity ID
-  LinkTargetType source_type = 3;     // Source entity type
-  string target_id = 4;               // Target entity ID
-  LinkTargetType target_type = 5;     // Target entity type
+  string source_id = 2;               // Source entity ID (UUID or display number)
+  LinkTargetType source_type = 3;     // Source entity type (legacy enum; prefer source_item_type)
+  string target_id = 4;               // Target entity ID (UUID or display number)
+  LinkTargetType target_type = 5;     // Target entity type (legacy enum; prefer target_item_type)
   string link_type = 6;               // Link type (e.g., "blocks")
+  string source_item_type = 7;        // Singular item type as a string (e.g., "issue", "plan"); overrides source_type
+  string target_item_type = 8;        // Singular item type as a string (e.g., "issue", "plan"); overrides target_type
 }
 
 message CreateLinkResponse {
@@ -931,11 +934,13 @@ message CreateLinkResponse {
 // Delete a link between two entities (also deletes inverse)
 message DeleteLinkRequest {
   string project_path = 1;
-  string source_id = 2;               // Source entity ID
-  LinkTargetType source_type = 3;     // Source entity type
-  string target_id = 4;               // Target entity ID
-  LinkTargetType target_type = 5;     // Target entity type
+  string source_id = 2;               // Source entity ID (UUID or display number)
+  LinkTargetType source_type = 3;     // Source entity type (legacy enum; prefer source_item_type)
+  string target_id = 4;               // Target entity ID (UUID or display number)
+  LinkTargetType target_type = 5;     // Target entity type (legacy enum; prefer target_item_type)
   string link_type = 6;               // Optional: specific link type to delete (empty = all links between entities)
+  string source_item_type = 7;        // Singular item type as a string (e.g., "issue", "plan"); overrides source_type
+  string target_item_type = 8;        // Singular item type as a string (e.g., "issue", "plan"); overrides target_type
 }
 
 message DeleteLinkResponse {
@@ -948,7 +953,8 @@ message DeleteLinkResponse {
 message ListLinksRequest {
   string project_path = 1;
   string entity_id = 2;               // Entity ID to list links for
-  LinkTargetType entity_type = 3;     // Entity type
+  LinkTargetType entity_type = 3;     // Entity type (legacy enum; prefer entity_item_type)
+  string entity_item_type = 4;        // Singular item type as a string (e.g., "issue", "plan"); overrides entity_type
 }
 
 message ListLinksResponse {
