@@ -426,7 +426,7 @@ message HookDefinition {
 // Custom link type definition (for custom relationship types)
 message LinkTypeDefinition {
   string name = 1;                    // Link type name (e.g., "depends-on")
-  string inverse = 2;                 // Inverse link type (e.g., "dependency-of")
+  reserved 2;                         // Removed: inverse (no longer needed — direction field on Link replaces it)
   string description = 3;             // Optional description
 }
 
@@ -907,12 +907,14 @@ enum LinkTargetType {
 message Link {
   string target_id = 1;               // Target entity ID (UUID for issues, slug for docs)
   LinkTargetType target_type = 2;     // Type of the target entity (legacy enum)
-  string link_type = 3;               // Relationship type (e.g., "blocks", "parent-of")
+  string link_type = 3;               // Relationship type (e.g., "blocks", "parent-of"); always from source's perspective
   string created_at = 4;              // ISO timestamp when link was created
   string target_item_type = 5;        // Singular item type as a string (e.g., "issue", "plan"); overrides target_type
+  string id = 6;                      // UUID of the link file (use for deletion)
+  string direction = 7;               // "source" or "target" — which side the queried entity is on
 }
 
-// Create a link between two entities (bidirectional - also creates inverse)
+// Create a link between two entities (one file, two response views)
 message CreateLinkRequest {
   string project_path = 1;
   string source_id = 2;               // Source entity ID (UUID or display number)
@@ -927,20 +929,14 @@ message CreateLinkRequest {
 message CreateLinkResponse {
   bool success = 1;
   string error = 2;
-  Link created_link = 3;              // The forward link that was created
-  Link inverse_link = 4;              // The inverse link that was created
+  Link created_link = 3;              // Source's view (direction="source")
+  Link inverse_link = 4;              // Target's view (direction="target")
 }
 
-// Delete a link between two entities (also deletes inverse)
+// Delete a link by its UUID
 message DeleteLinkRequest {
   string project_path = 1;
-  string source_id = 2;               // Source entity ID (UUID or display number)
-  LinkTargetType source_type = 3;     // Source entity type (legacy enum; prefer source_item_type)
-  string target_id = 4;               // Target entity ID (UUID or display number)
-  LinkTargetType target_type = 5;     // Target entity type (legacy enum; prefer target_item_type)
-  string link_type = 6;               // Optional: specific link type to delete (empty = all links between entities)
-  string source_item_type = 7;        // Singular item type as a string (e.g., "issue", "plan"); overrides source_type
-  string target_item_type = 8;        // Singular item type as a string (e.g., "issue", "plan"); overrides target_type
+  string link_id = 2;                 // UUID of the link file to delete (from Link.id)
 }
 
 message DeleteLinkResponse {
@@ -972,7 +968,7 @@ message GetAvailableLinkTypesRequest {
 // Information about a link type
 message LinkTypeInfo {
   string name = 1;                    // Link type name (e.g., "blocks")
-  string inverse = 2;                 // Inverse link type (e.g., "blocked-by")
+  reserved 2;                         // Removed: inverse (no longer needed — use direction on Link instead)
   string description = 3;             // Optional description
   bool is_builtin = 4;                // Whether this is a built-in type
 }
