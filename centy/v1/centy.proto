@@ -396,7 +396,7 @@ message Config {
   reserved 9;  // Previously: LlmConfig llm (removed)
   repeated LinkTypeDefinition custom_link_types = 10;  // Custom link types (in addition to built-in)
   string default_editor = 11;                // Default editor ID for this project (e.g., "vscode", "terminal", "zed")
-  repeated HookDefinition hooks = 12;                  // Lifecycle hooks
+  reserved 12;  // Previously: repeated HookDefinition hooks (moved to hooks.yaml)
   WorkspaceConfig workspace = 13;            // Workspace settings
   map<string, string> user_values = 14;      // User-defined free-form key-value pairs
 }
@@ -412,15 +412,6 @@ message CustomFieldDefinition {
   bool required = 3;
   string default_value = 4;
   repeated string enum_values = 5;  // For enum type
-}
-
-// Lifecycle hook definition (bash scripts to run before/after operations)
-message HookDefinition {
-  string pattern = 1;                   // Pattern like "pre:issue:create" or "*:*:delete"
-  string command = 2;                   // Bash command to execute
-  bool run_async = 3;                   // If true, run in background (post-hooks only)
-  uint64 timeout = 4;                   // Timeout in seconds (default: 30)
-  bool enabled = 5;                     // Whether hook is enabled (default: true)
 }
 
 // Custom link type definition (for custom relationship types)
