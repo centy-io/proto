@@ -895,21 +895,13 @@ message CleanupExpiredWorkspacesResponse {
 
 // ============ Link Messages ============
 
-// Target entity type for links
-enum LinkTargetType {
-  LINK_TARGET_TYPE_UNSPECIFIED = 0;
-  LINK_TARGET_TYPE_ISSUE = 1;
-  LINK_TARGET_TYPE_DOC = 2;
-  reserved 3;                         // Removed: LINK_TARGET_TYPE_PR
-}
-
 // A link between two entities
 message Link {
   string target_id = 1;               // Target entity ID (UUID for issues, slug for docs)
-  LinkTargetType target_type = 2;     // Type of the target entity (legacy enum)
+  reserved 2;                         // Removed: LinkTargetType target_type (legacy enum)
   string link_type = 3;               // Relationship type (e.g., "blocks", "parent-of"); always from source's perspective
   string created_at = 4;              // ISO timestamp when link was created
-  string target_item_type = 5;        // Singular item type as a string (e.g., "issue", "plan"); overrides target_type
+  string target_item_type = 5;        // Singular item type as a string (e.g., "issue", "plan")
   string id = 6;                      // UUID of the link file (use for deletion)
   string direction = 7;               // "source" or "target" — which side the queried entity is on
 }
@@ -918,12 +910,12 @@ message Link {
 message CreateLinkRequest {
   string project_path = 1;
   string source_id = 2;               // Source entity ID (UUID or display number)
-  LinkTargetType source_type = 3;     // Source entity type (legacy enum; prefer source_item_type)
+  reserved 3;                         // Removed: LinkTargetType source_type (legacy enum)
   string target_id = 4;               // Target entity ID (UUID or display number)
-  LinkTargetType target_type = 5;     // Target entity type (legacy enum; prefer target_item_type)
+  reserved 5;                         // Removed: LinkTargetType target_type (legacy enum)
   string link_type = 6;               // Link type (e.g., "blocks")
-  string source_item_type = 7;        // Singular item type as a string (e.g., "issue", "plan"); overrides source_type
-  string target_item_type = 8;        // Singular item type as a string (e.g., "issue", "plan"); overrides target_type
+  string source_item_type = 7;        // Singular item type as a string (e.g., "issue", "plan")
+  string target_item_type = 8;        // Singular item type as a string (e.g., "issue", "plan")
 }
 
 message CreateLinkResponse {
@@ -949,8 +941,8 @@ message DeleteLinkResponse {
 message ListLinksRequest {
   string project_path = 1;
   string entity_id = 2;               // Entity ID to list links for
-  LinkTargetType entity_type = 3;     // Entity type (legacy enum; prefer entity_item_type)
-  string entity_item_type = 4;        // Singular item type as a string (e.g., "issue", "plan"); overrides entity_type
+  reserved 3;                         // Removed: LinkTargetType entity_type (legacy enum)
+  string entity_item_type = 4;        // Singular item type as a string (e.g., "issue", "plan")
 }
 
 message ListLinksResponse {
