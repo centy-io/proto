@@ -1106,14 +1106,6 @@ message SyncUsersResponse {
 
 // ============ Entity Actions Messages ============
 
-// Entity type for actions
-enum EntityType {
-  ENTITY_TYPE_UNSPECIFIED = 0;
-  ENTITY_TYPE_ISSUE = 1;
-  reserved 2;                         // Removed: ENTITY_TYPE_PR
-  ENTITY_TYPE_DOC = 3;
-}
-
 // Action category for grouping in UI
 enum ActionCategory {
   ACTION_CATEGORY_UNSPECIFIED = 0;
@@ -1137,8 +1129,9 @@ message EntityAction {
 // Request to get available actions for an entity
 message GetEntityActionsRequest {
   string project_path = 1;              // Project path for config/state lookup
-  EntityType entity_type = 2;           // Type of entity (issue, doc)
+  reserved 2;                           // Removed: EntityType entity_type (legacy enum)
   string entity_id = 3;                 // Optional: entity ID for contextual actions (empty = general actions like "create")
+  string item_type = 4;                 // Type of item (e.g., "issues", "docs")
 }
 
 // Response with available actions
