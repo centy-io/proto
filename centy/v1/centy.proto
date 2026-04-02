@@ -1282,6 +1282,7 @@ message ItemTypeConfigProto {
   repeated CustomFieldDefinition custom_fields = 8;
   string icon = 9;                      // Optional icon identifier (e.g. "clipboard")
   string template = 10;                 // Optional template file path
+  bool listed = 11;                     // Whether this type appears in ListItemTypes responses
 }
 
 message ListItemTypesRequest {
