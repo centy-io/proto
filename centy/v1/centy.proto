@@ -9,12 +9,6 @@ service CentyDaemon {
   // Initialize a .centy folder in the specified directory
   rpc Init(InitRequest) returns (InitResponse);
 
-  // Get reconciliation plan without executing it
-  rpc GetReconciliationPlan(GetReconciliationPlanRequest) returns (ReconciliationPlan);
-
-  // Execute reconciliation with user decisions
-  rpc ExecuteReconciliation(ExecuteReconciliationRequest) returns (InitResponse);
-
   // Read the manifest
   rpc GetManifest(GetManifestRequest) returns (GetManifestResponse);
 
@@ -275,38 +269,6 @@ message InitResponse {
 
   // Organization inference result from git remote
   OrgInferenceResult org_inference = 8;
-}
-
-message GetReconciliationPlanRequest {
-  string project_path = 1;
-}
-
-message ReconciliationPlan {
-  // Files that need to be created (not on disk, not in manifest)
-  repeated FileInfo to_create = 1;
-
-  // Files that were deleted but exist in manifest (can be restored)
-  repeated FileInfo to_restore = 2;
-
-  // Files that were modified from original (hash mismatch)
-  repeated FileInfo to_reset = 3;
-
-  // Files that are up to date
-  repeated FileInfo up_to_date = 4;
-
-  // User-created files (not managed by centy)
-  repeated FileInfo user_files = 5;
-
-  // Whether user decisions are needed
-  bool needs_decisions = 6;
-
-  bool success = 7;
-  string error = 8;
-}
-
-message ExecuteReconciliationRequest {
-  string project_path = 1;
-  ReconciliationDecisions decisions = 2;
 }
 
 message ReconciliationDecisions {
