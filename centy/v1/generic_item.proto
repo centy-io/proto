@@ -20,6 +20,7 @@ message GenericItem {
   string title = 3;                     // Item title
   string body = 4;                      // Item body (markdown content)
   GenericItemMetadata metadata = 5;
+  string source = 6;                    // Item origin: "project" | "org"
 }
 
 message GenericItemMetadata {
