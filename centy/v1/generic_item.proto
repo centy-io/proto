@@ -31,6 +31,7 @@ message GenericItemMetadata {
   string deleted_at = 6;                // ISO timestamp when soft-deleted (empty if not deleted)
   map<string, string> custom_fields = 7; // Custom fields (values are JSON strings)
   repeated string tags = 8;             // Free-form tags (e.g. ["bug", "frontend"])
+  repeated string projects = 9;         // Project slugs this item is associated with (org-wide items only)
 }
 
 message CreateItemRequest {
@@ -42,6 +43,7 @@ message CreateItemRequest {
   int32 priority = 6;                   // 0 = use default
   map<string, string> custom_fields = 7; // Custom fields (values are JSON strings)
   repeated string tags = 8;             // Tags to set on create (empty = no tags)
+  repeated string projects = 9;         // Associated project slugs; len > 1 → written to the org repo
 }
 
 message CreateItemResponse {
@@ -69,6 +71,7 @@ message ListItemsRequest {
   uint32 limit = 6;                     // Limit results (0 = no limit)
   uint32 offset = 7;                    // Offset for pagination (0 = no offset)
   string filter = 8;                    // JSON-encoded MQL query (e.g. {"status":{"$in":["open","in-progress"]}})
+  optional bool include_organization_items = 9; // Include organization-wide items for this project (default: true)
 }
 
 message ListItemsResponse {
