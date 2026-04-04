@@ -44,6 +44,7 @@ message CreateItemRequest {
   map<string, string> custom_fields = 7; // Custom fields (values are JSON strings)
   repeated string tags = 8;             // Tags to set on create (empty = no tags)
   repeated string projects = 9;         // Associated project slugs; len > 1 → written to the org repo
+  bool org_wide = 10;                   // If true, write to the org-wide .centy repo instead of the project repo
 }
 
 message CreateItemResponse {
