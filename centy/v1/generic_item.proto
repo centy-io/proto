@@ -65,6 +65,7 @@ message GetItemResponse {
   bool success = 1;
   string error = 2;
   GenericItem item = 3;
+  string source = 4;                    // "org" when retrieved via org repo fallback; empty/unset = project-local
 }
 
 message ListItemsRequest {
