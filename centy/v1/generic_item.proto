@@ -20,7 +20,6 @@ message GenericItem {
   string title = 3;                     // Item title
   string body = 4;                      // Item body (markdown content)
   GenericItemMetadata metadata = 5;
-  string source = 6;                    // Item origin: "project" | "org"
 }
 
 message GenericItemMetadata {
@@ -45,7 +44,6 @@ message CreateItemRequest {
   map<string, string> custom_fields = 7; // Custom fields (values are JSON strings)
   repeated string tags = 8;             // Tags to set on create (empty = no tags)
   repeated string projects = 9;         // Associated project slugs; len > 1 → written to the org repo
-  bool org_wide = 10;                   // If true, write to the org-wide .centy repo instead of the project repo
 }
 
 message CreateItemResponse {
@@ -65,7 +63,6 @@ message GetItemResponse {
   bool success = 1;
   string error = 2;
   GenericItem item = 3;
-  string source = 4;                    // "org" when retrieved via org repo fallback; empty/unset = project-local
 }
 
 message ListItemsRequest {
