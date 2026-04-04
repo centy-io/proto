@@ -92,6 +92,7 @@ message UpdateItemRequest {
   map<string, string> custom_fields = 8; // Custom fields to merge (values are JSON strings)
   repeated string tags = 9;             // Non-empty = replace tags; empty = don't change
   bool clear_tags = 10;                 // If true, clear all tags (takes precedence over tags field)
+  repeated string projects = 11;        // Non-empty = replace projects; empty = don't change
 }
 
 message UpdateItemResponse {
