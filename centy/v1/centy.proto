@@ -131,6 +131,9 @@ service CentyDaemon {
   // Get all available link types (builtin + custom)
   rpc GetAvailableLinkTypes(GetAvailableLinkTypesRequest) returns (GetAvailableLinkTypesResponse);
 
+  // Update an existing link (e.g. change link type)
+  rpc UpdateLink(UpdateLinkRequest) returns (UpdateLinkResponse);
+
   // ============ User RPCs ============
 
   // Create a new user
@@ -894,6 +897,20 @@ message LinkTypeInfo {
 
 message GetAvailableLinkTypesResponse {
   repeated LinkTypeInfo link_types = 1;
+}
+
+// Update an existing link
+message UpdateLinkRequest {
+  string project_path = 1;
+  string link_id = 2;                 // UUID of the link file to update (from Link.id)
+  string link_type = 3;               // New link type (e.g. "blocks")
+}
+
+message UpdateLinkResponse {
+  bool success = 1;
+  string error = 2;
+  Link updated_link = 3;              // Source's view after update (direction="source")
+  Link inverse_link = 4;              // Target's view after update (direction="target")
 }
 
 // ============ User Messages ============
