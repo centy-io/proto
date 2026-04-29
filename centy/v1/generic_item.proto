@@ -27,7 +27,8 @@ message GenericItemMetadata {
   string status = 2;                    // Item status (empty if not applicable)
   uint32 priority = 3;                  // Priority level (0 if not applicable)
   string created_at = 4;                // ISO timestamp
-  string updated_at = 5;                // ISO timestamp
+  reserved 5;
+  reserved "updated_at";
   string deleted_at = 6;                // ISO timestamp when soft-deleted (empty if not deleted)
   map<string, string> custom_fields = 7; // Custom fields (values are JSON strings)
   repeated string tags = 8;             // Free-form tags (e.g. ["bug", "frontend"])
