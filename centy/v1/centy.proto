@@ -89,6 +89,9 @@ service CentyDaemon {
   // Get daemon version info
   rpc GetDaemonInfo(GetDaemonInfoRequest) returns (DaemonInfo);
 
+  // Check GitHub releases for a newer daemon version
+  rpc CheckForUpdates(CheckForUpdatesRequest) returns (CheckForUpdatesResponse);
+
   // ============ Daemon Control RPCs ============
 
   // Shutdown the daemon gracefully
@@ -666,6 +669,25 @@ message DaemonInfo {
   reserved 2;                            // was: repeated string available_versions (removed)
   string binary_path = 3;                // Absolute path to the running daemon binary
   reserved 4;                            // was: vscode_available (removed)
+}
+
+message CheckForUpdatesRequest {}
+
+message CheckForUpdatesResponse {
+  bool success = 1;
+  string error = 2;                      // Structured error JSON when success is false
+  string current_version = 3;            // Running daemon version (e.g., "0.1.0")
+  string latest_version = 4;             // Latest stable release, without leading "v" (empty if none)
+  bool update_available = 5;             // True when latest_version is newer than current_version
+  repeated GitHubRelease releases = 6;   // Releases as listed by GitHub, newest first
+}
+
+message GitHubRelease {
+  string tag_name = 1;                   // Git tag (e.g., "v0.2.0")
+  string name = 2;                       // Release title
+  string published_at = 3;               // RFC 3339 timestamp (empty for drafts)
+  bool prerelease = 4;
+  string html_url = 5;                   // Release page URL
 }
 
 // ============ Daemon Control Messages ============
