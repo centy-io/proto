@@ -1355,7 +1355,9 @@ message ListHookExecutionsRequest {
 }
 
 message ListHookExecutionsResponse {
-  repeated HookExecution executions = 1;
+  bool success = 1;
+  string error = 2;                    // Structured error JSON when success is false
+  repeated HookExecution executions = 3;
 }
 
 message GetHookExecutionRequest {
@@ -1364,6 +1366,8 @@ message GetHookExecutionRequest {
 }
 
 message GetHookExecutionResponse {
-  bool found = 1;
-  HookExecution execution = 2;         // Set only when found
+  bool success = 1;
+  string error = 2;                    // Structured error JSON when success is false
+  bool found = 3;
+  HookExecution execution = 4;         // Set only when found
 }
