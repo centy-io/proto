@@ -1,12 +1,21 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/tupe12334/linecheck/main/schema/linecheck.schema.json
 
-# Day-one adoption: .proto files warn only, so CI reports the existing
-# centy/v1/centy.proto monolith without blocking merges. Tighten to an
-# `error` threshold once that file is split.
 rules:
+  # Grandfathered: centy.proto is 1373 lines today. The error ceiling sits just
+  # above that so the file cannot grow further, while the warn keeps it visible.
+  # Lower the ceiling as the file is split; delete this rule once it is under 400.
+  - pattern: "centy/v1/centy.proto"
+    warn: 200
+    warn_message: "Still oversized — split messages out into their own .proto"
+    error: 1400
+    error_message: "centy.proto must not grow further; split it instead of raising this ceiling"
+
+  # Every other .proto, including any new one, is held to the real limit.
   - pattern: "**/*.proto"
     warn: 200
     warn_message: "Getting long — consider splitting these messages into their own .proto"
+    error: 400
+    error_message: "Too large to review easily; split this file now"
 
 exclude:
   - "**/pnpm-lock.yaml"
