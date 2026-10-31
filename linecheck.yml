@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/tupe12334/linecheck/main/schema/linecheck.schema.json
+
+# Day-one adoption: .proto files warn only, so CI reports the existing
+# centy/v1/centy.proto monolith without blocking merges. Tighten to an
+# `error` threshold once that file is split.
+rules:
+  - pattern: "**/*.proto"
+    warn: 200
+    warn_message: "Getting long — consider splitting these messages into their own .proto"
+
+  - pattern: "**/*.md"
+    warn: 200
+    warn_message: "Getting long — consider splitting into separate docs"
+    error: 400
+    error_message: "Too large to review easily; split this doc now"
+
+exclude:
+  - "**/pnpm-lock.yaml"
+  - "**/node_modules/**"
